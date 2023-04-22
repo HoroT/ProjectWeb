@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/ol@7.2.2/ol.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/map.css">
+    <title>Карта ВДНХ</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="nav-div">
+        <div class="logout-div">
+            <div>{{ user }}</div>
+            <a class="logout-btn">Выйти</a>
+        </div>
+        <div class="routes-div">
+            <div class="options-container">
+                <div class="option" data-target="0">
+                    <p>Павильоны</p>
+                    <div class="arrow"></div>
+                </div>
+                <div class="option" data-target="1">
+                    <p>Маршруты</p>
+                    <div class="arrow"></div>
+                </div>
+                <div class="option" data-target="2">
+                    <p>Создать маршрут</p>
+                    <div class="arrow"></div>
+                </div>
+            </div>
+            <div class="routes-block" data-id="0">
+                <div class="back">
+                    <div class="arrow arrow-back"></div>
+                    <p>Назад</p>
+                </div>
+                {% for elem in pavilions %}
+                    <div class="pavilion" data-coord-x="{{ elem.coordinates[0] }}"
+                         data-coord-y="{{ elem.coordinates[1] }}">
+                        <div>
+                            <h3 class="name">{{ elem.name }}</h3>
+                            <div class="magnifer-container">
+                                <div>i</div>
+                                <span class="magnifer"></span>
+                            </div>
+                        </div>
+                        <div class="description-collapse">
+                            <div class="description">
+                                <span>{{ elem.description }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="routes-block" data-id="1">
+                <div class="back">
+                    <div class="arrow arrow-back"></div>
+                    <p>Назад</p>
+                </div>
+                {% for route in saved_routes %}
+                    <div class="saved-route" data-p1="{{ route['p1'] }}" data-p2="{{ route['p2'] }}">{{ route["name"] }}</div>
+                {% endfor %}
+            </div>
+            <div class="routes-block" data-id="2">
+                <div class="back">
+                    <div class="arrow arrow-back"></div>
+                    <p>Назад</p>
+                </div>
+                <div class="route-point-text">
+                    <h3>Начало</h3>
+                </div>
+                <div class="select-route select-start">
+                    <select>
+                        {% for elem in pavilions %}
+                            <option data-coord-x="{{ elem.coordinates[0] }}"
+                                    data-coord-y="{{ elem.coordinates[1] }}">{{ elem.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <p>или</p>
+                    <a class="select-from-map">Выбрать на карте</a>
+                </div>
+                <div class="route-point-text">
+                    <h3>Конец</h3>
+                </div>
+                <div class="select-route select-end">
+                    <select>
+                        {% for elem in pavilions %}
+                            <option data-coord-x="{{ elem.coordinates[0] }}"
+                                    data-coord-y="{{ elem.coordinates[1] }}">{{ elem.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <p>или</p>
+                    <a class="select-from-map">Выбрать на карте</a>
+                </div>
+                <div class="build-route">Построить</div>
+                <div class="time">
+                    <span>Время в пути: <span class="time-placeholder">?</span> минут</span>
+                </div>
+                <div id="save-route">Сохранить</div>
+            </div>
+        </div>
+    </div>
+    <div class="map" id="map">
+        <div></div>
+    </div>
+</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/ol@7.2.2/dist/ol.min.js"></script>
+<script src="/static/js/map.js"></script>
+
+</html>
