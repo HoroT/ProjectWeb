@@ -1,5 +1,5 @@
-from vdmap import create_app, db, config
 from vdmap.db.models import users, routes
+from vdmap import create_app, db, config
 from vdmap.modules.map import cli
 
 app = create_app()

@@ -42,9 +42,11 @@ def save_route():
     route = Routes()
     route.user_id = current_user.id
     route.set_route(name, p1, p2)
+    print( route )
     with d() as db:
         db.add(route)
         db.commit()
+        print( db )
     return jsonify({"ok": "ok"})
 
 
